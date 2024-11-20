@@ -1,10 +1,12 @@
 # Load-Balancer Cluster
 
 ### O tutorial a seguir contem os seguintes tópicos:
+Neste tutorial você encontrará os recursos necessários para a configuração do **K3S** em seu cluster de _computadores single-board_.
 
-- Comandos iniciais K3s: ***[basic_k3s](https://github.com/Prisma-IAP/load_balancer_cluster/tree/main/basic_k3s)***
+- Primeiros passos - Cluster com K3s: ***[basic_k3s](https://github.com/Prisma-IAP/load_balancer_cluster/tree/main/basic_k3s)***
 - Comandos essenciais K3s: ***[commands](https://github.com/Prisma-IAP/load_balancer_cluster/tree/main/commands)***
-- Manifestos com aplicações para deploy: ***[manifests](https://github.com/Prisma-IAP/load_balancer_cluster/tree/main/manifests)***
+- Fazendo o deploy de aplicações e serviços no K3s: ***[manifests](https://github.com/Prisma-IAP/load_balancer_cluster/tree/main/manifests)***
+- Configuração básica do Traefik Dashboard: ***[traefik](https://github.com/Prisma-IAP/load_balancer_cluster/tree/main/traefik)***
 
 
 ### Referências (YouTube)
