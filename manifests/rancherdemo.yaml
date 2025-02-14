@@ -28,8 +28,10 @@ spec:
           resources:
             limits:
               cpu: 200m
+              memory: 100m # fix here
             requests:
               cpu: 100m
+              memory: 100m # fix here
           env:
           - name: CONTAINER_COLOR
             value: orange
@@ -51,7 +53,7 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: rancher-app
-  minReplicas: 4
+  minReplicas: 2
   maxReplicas: 10
   metrics:
   - type: Resource
@@ -59,7 +61,13 @@ spec:
       name: cpu
       target:
         type: Utilization
-        averageUtilization: 50
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 90
 ---
 apiVersion: v1
 kind: Service
