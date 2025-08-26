@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: rancher-app
 spec:
-  replicas: 3
+  replicas: 1
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -11,11 +11,11 @@ spec:
       maxUnavailable: 0
   selector:
     matchLabels:
-      name: rancher-demo-app
+      name: rancher-app
   template:
     metadata:
       labels:
-        name: rancher-demo-app
+        name: rancher-app
     spec:
       containers:
         - name: rancher-demo
@@ -25,6 +25,13 @@ spec:
             - containerPort: 8080
               name: web
               protocol: TCP
+          resources:
+            limits:
+              cpu: 200m
+              memory: 100m # fix here
+            requests:
+              cpu: 100m
+              memory: 100m # fix here
           env:
           - name: CONTAINER_COLOR
             value: orange
@@ -36,6 +43,31 @@ spec:
             httpGet:
               port: web
               path: /
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: rancher-app
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: rancher-app
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 90
 ---
 apiVersion: v1
 kind: Service
@@ -50,7 +82,7 @@ spec:
       targetPort: 8080
       nodePort: 31120
   selector:
-    name: rancher-demo-app
+    name: rancher-app
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
